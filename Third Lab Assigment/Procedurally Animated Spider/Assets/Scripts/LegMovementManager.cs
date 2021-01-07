@@ -32,30 +32,9 @@ public class LegMovementManager : MonoBehaviour
 
     private static bool MakeACheck(List<IKLegTarget> targetsSide, List<IKLegTarget> oppositeSide, int index) 
     {
-        int indexCheck = index % 2 == 0 ? 1 : -1;
-        return oppositeSide[index].IsGrounded && targetsSide[index + indexCheck].IsGrounded;
+        int indexCheck = (index + 1)%targetsSide.Count;
+        return oppositeSide[index].IsGrounded && targetsSide[indexCheck].IsGrounded;
     }
 
-    public Vector3 GetEulerSpiderRotation() 
-    {
-        float leftAmount = 0, rightAmount = 0, frontAmount = 0, backAmount = 0;
-        for (int i = 0; i < _leftTargets.Count; ++i) 
-        {
-            leftAmount += _leftTargets[i].Transform.position.y;
-            rightAmount += _rightTargets[i].Transform.position.y;
-            if (i >= _leftTargets.Count / 2)        //BACK LEGS
-                backAmount += (_leftTargets[i].Transform.position.y + _rightTargets[i].Transform.position.y);
-            else                                    //FRONT LEGS
-                frontAmount += (_leftTargets[i].Transform.position.y + _rightTargets[i].Transform.position.y);
-        }
-        return new Vector3(Mathf.Clamp((rightAmount - leftAmount) * _rotationMultiplier,-90, 90), 0, Mathf.Clamp((frontAmount - backAmount) * _rotationMultiplier, -90, 90));
-    }
-
-    public float GetSpiderY() 
-    {
-        float ySum = 0;
-        for (int i = 0; i < _leftTargets.Count; ++i) 
-            ySum += _leftTargets[i].Transform.position.y + _rightTargets[i].Transform.position.y;
-        return ySum / (_leftTargets.Count + _rightTargets.Count) + _baseHeight;
-    }
+    public float GetBaseHeight() { return _baseHeight; }
 }

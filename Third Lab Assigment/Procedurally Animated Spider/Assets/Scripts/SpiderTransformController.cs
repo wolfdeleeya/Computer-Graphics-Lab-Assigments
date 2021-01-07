@@ -14,7 +14,5 @@ public class SpiderTransformController : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 position = _transform.position;
-        _transform.position = new Vector3(position.x, LegMovementManager.Instance.GetSpiderY(), position.z);
-        _transform.rotation = Quaternion.Euler(LegMovementManager.Instance.GetEulerSpiderRotation());
     }
 }
