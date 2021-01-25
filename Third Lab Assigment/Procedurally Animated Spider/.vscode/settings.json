@@ -1,0 +1,15 @@
+{
+    "git.ignoreLimitWarning": true,
+    "files.associations": {
+        "cmath": "cpp",
+        "cstddef": "cpp",
+        "cstdlib": "cpp",
+        "cwchar": "cpp",
+        "initializer_list": "cpp",
+        "limits": "cpp",
+        "xstddef": "cpp",
+        "xtr1common": "cpp",
+        "vector": "cpp",
+        "set": "cpp"
+    }
+}
