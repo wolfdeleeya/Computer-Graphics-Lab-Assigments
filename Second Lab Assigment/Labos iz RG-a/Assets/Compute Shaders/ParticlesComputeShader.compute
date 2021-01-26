@@ -1,0 +1,25 @@
+﻿struct ParticleStruct {
+	float3 pos;
+	float3 vel;
+	float time;
+};
+
+RWStructuredBuffer<ParticleStruct> _Particles;
+float3 _SourcePos;
+float _TimeToSet;
+float _DeltaTime;
+float _Vel;
+int _NumOfParticles;
+
+#pragma kernel CalculateParticles
+
+[numthreads(64, 1, 1)]
+void CalculateParticles(uint3 id: SV_DispatchThreadID) {
+	int index = id.x;
+	if (index >= _NumOfParticles)
+		return;
+	float dif = _Particles[index].time - _DeltaTime;
+	half difBool = step(dif, 0);
+	_Particles[index].time = difBool * _TimeToSet + (1 - difBool) * dif;
+	_Particles[index].pos = difBool * _SourcePos + (1 - difBool) * (_Particles[index].pos + _Particles[index].vel);
+}
